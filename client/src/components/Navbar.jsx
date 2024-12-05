@@ -22,8 +22,7 @@ const Navbar = () => {
           <ThemeToggle />
           <LogoutContainer />
         </div>
-      </div>
-      <FaHome />
+      </div> 
     </Wrapper>
   );
 };
