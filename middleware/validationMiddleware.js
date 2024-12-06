@@ -53,7 +53,6 @@ export const validateIdParam = withValidationErrors([
       throw new UnauthorizedError("not authorized to access this route");
   }),
 ]);
-
 export const validateRegisterInput = withValidationErrors([
   body("name").notEmpty().withMessage("name is required"),
   body("email")
@@ -71,7 +70,7 @@ export const validateRegisterInput = withValidationErrors([
     .notEmpty()
     .withMessage("password is required")
     .isLength({ min: 8 })
-    .withMessage("password ,ust be at least 8 characters long"),
+    .withMessage("password must be at least 8 characters long"),
   body("location").notEmpty().withMessage("location is required"),
   body("lastName").notEmpty().withMessage("last name is required"),
 ]);
