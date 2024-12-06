@@ -15,11 +15,11 @@ const withValidationErrors = (validateValues) => {
 
         const firstMessage = errorMessages[0];
         console.log(Object.getPrototypeOf(firstMessage));
-        if (errorMessages[0].startsWith('no job')) {
+        if (errorMessages[0].startsWith("no job")) {
           throw new NotFoundError(errorMessages);
         }
-        if (errorMessages[0].startsWith('not authorized')) {
-          throw new UnauthorizedError('not authorized to access this route');
+        if (errorMessages[0].startsWith("not authorized")) {
+          throw new UnauthorizedError("not authorized to access this route");
         }
         throw new BadRequestError(errorMessages);
       }
@@ -83,4 +83,22 @@ export const validateLoginInput = withValidationErrors([
     .isEmail()
     .withMessage("invalid email format"),
   body("password").notEmpty().withMessage("password is required"),
+]);
+
+export const validateUpdateUserInput = withValidationErrors([
+  body("name").notEmpty().withMessage("name is required"),
+  body("email")
+    .notEmpty()
+    .withMessage("email is required")
+    .isEmail()
+    .withMessage("invalid email format")
+    .custom(async (email, { req }) => {
+      const user = await User.findOne({ email });
+      if (user && user._id.toString() !== req.user.userId) {
+        throw new BadRequestError("email already exists");
+      }
+    }),
+
+  body("location").notEmpty().withMessage("location is required"),
+  body("lastName").notEmpty().withMessage("last name is required"),
 ]);
