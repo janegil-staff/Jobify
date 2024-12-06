@@ -5,20 +5,19 @@ import customFetch from "../utils/customFetch";
 import { toast } from "react-toastify";
 
 export const action = async ({ request }) => {
-    const formData = await request.formData();
-    const data = Object.fromEntries(formData);
-    try {
-      await customFetch.post("/auth/login", data)
-      toast.success("Login successful");
-      return redirect("/dashboard");
-    } catch (error) {
-      toast.error(error?.response?.data?.msg);
-      return error;
-    }
-  };
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  try {
+    await customFetch.post("/auth/login", data);
+    toast.success("Login successful");
+    return redirect("/dashboard");
+  } catch (error) {
+    toast.error(error?.response?.data?.msg);
+    return error;
+  }
+};
+
 const Login = () => {
-
-
   return (
     <Wrapper>
       <Form method="post" className="form">
@@ -36,7 +35,7 @@ const Login = () => {
           defaultValue="secret123"
           labelText="Password"
         />
-        <SubmitBtn/>
+        <SubmitBtn />
         <button type="button" className="btn btn-block">
           Explore the app
         </button>
